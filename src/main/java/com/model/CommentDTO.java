@@ -25,13 +25,14 @@ public class CommentDTO {
     public void setComment(String comment) { this.comment = comment; }
     
     
-
+    //Constructors
     public CommentDTO(Long id, Long blogId, String comment) {
     	super();
         this.id = id;
         this.blogId = blogId;
         this.comment = comment;
     }
+    
     
     public CommentDTO() {}
 

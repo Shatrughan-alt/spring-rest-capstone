@@ -14,6 +14,7 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "blogs")
 public class BlogEntity {
+	// Unique Identifier with Auto-Generated using IDENTITY strategy (Works as a Primary Key)
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -24,6 +25,7 @@ public class BlogEntity {
 	@OneToMany(mappedBy = "blog", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<CommentEntity> comments;
 	
+	// Getters and Setters
 	
 	public Long getId() {
 		return id;
@@ -52,11 +54,14 @@ public class BlogEntity {
 	public List<CommentEntity> getComments() { return comments; }
     public void setComments(List<CommentEntity> comments) { this.comments = comments; }
 
+    
+    // Constructs a BlogEntity with a title and content
 	public BlogEntity(String title, String content) {
 		super();
-//		this.id = id;
 		this.title = title;
 		this.content = content;
 	}
+	
+	// Default Constructor
 	public BlogEntity() {}
 }

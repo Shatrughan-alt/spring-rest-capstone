@@ -17,11 +17,15 @@ public class CommentService {
 
 	private CommentRepository commentRepository;
 	private BlogRepository blogRepository;
+	
+	// Constructor-based dependency injection for CommentRepository and BlogRepository
 	public CommentService(CommentRepository commentRepository, BlogRepository blogRepository) {
         this.commentRepository = commentRepository;
         this.blogRepository = blogRepository;
     }
 	
+	
+	// Convert CommentDTO object to CommentEntity object
 	private CommentEntity convertCommentDTOToEntity(CommentDTO comment, BlogEntity blogEntity) {
 	    CommentEntity commentEntity = new CommentEntity();
 	    commentEntity.setId(comment.getId());
@@ -30,6 +34,8 @@ public class CommentService {
 	    return commentEntity;
 	}
 
+	
+	// Convert CommentEntity object to CommentDTO object
 	private CommentDTO convertCommentEntityToDTO(CommentEntity commentEntity) {
 	    CommentDTO commentDTO = new CommentDTO();
 	    commentDTO.setId(commentEntity.getId());
@@ -40,6 +46,7 @@ public class CommentService {
 	
 	
 
+	// Posting or Adding Comment 
 	 public CommentDTO addComment(CommentDTO commentDTO) {
 	        BlogEntity blogEntity = blogRepository.findById(commentDTO.getBlogId())
 	                .orElseThrow(() -> new CustomException("Blog not found"));
@@ -48,6 +55,8 @@ public class CommentService {
 	        return convertCommentEntityToDTO(savedComment);
 	    }
 	 
+	 
+	 // Find All Comments using BlogID
 	 public List<CommentDTO> getCommentsByBlogId(Long blogId) {
 	     BlogEntity blogEntity = blogRepository.findById(blogId)
 	             .orElseThrow(() -> new CustomException("Blog not found"));

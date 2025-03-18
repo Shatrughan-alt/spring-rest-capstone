@@ -6,6 +6,7 @@ import jakarta.persistence.*;
 @Table(name = "comments")
 public class CommentEntity {
     
+	// Unique Identifier with Auto-Generated using IDENTITY strategy (Works as a Primary Key)
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -17,9 +18,10 @@ public class CommentEntity {
     @JoinColumn(name = "blog_id", nullable = false)
     private BlogEntity blog;
 
-    // Constructors
+    // Default Constructor
     public CommentEntity() {}
 
+    // Constructs a CommentEntity with comment and blog
     public CommentEntity(String comment, BlogEntity blog) {
         this.comment = comment;
         this.blog = blog;

@@ -8,5 +8,7 @@ import com.entity.BlogEntity;
 import com.entity.CommentEntity;
 
 public interface CommentRepository extends JpaRepository<CommentEntity, Long>{
+	
+	// Retrive All Comments with given Blog
 	List<CommentEntity> findByBlog(BlogEntity blog);
 }

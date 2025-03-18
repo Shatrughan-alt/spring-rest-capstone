@@ -11,11 +11,16 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 @RestControllerAdvice
+// Global exception handler for handling exceptions
 public class GlobalExceptionHandler {
+	
+	// Handles custom exceptions
 	@ExceptionHandler(CustomException.class)
 	public String handleCustomException(CustomException ex) {
 		return ex.getMessage();
 	}
+	
+	// Handles validation errors
 	@ExceptionHandler(MethodArgumentNotValidException.class)
 	public ResponseEntity<Object> handleValidationExceptions(MethodArgumentNotValidException ex) {
 		List<String> details = new ArrayList<>();

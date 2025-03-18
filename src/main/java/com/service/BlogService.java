@@ -15,13 +15,15 @@ import com.repository.BlogRepository;
 public class BlogService {
 	
 	private BlogRepository blogRepository;
+	
+    // Constructor based Dependency Injection for BlogRepository
 	public BlogService(BlogRepository blogRepository) {
 		this.blogRepository=blogRepository;
 	}
 	
 	
 	
-	
+	// Convert BlogDTO object to BlogEntity object
 	private BlogEntity convertBlogDTOToEntity(BlogDTO blog) {
 	    BlogEntity blogEntity = new BlogEntity();
 	    blogEntity.setId(blog.getId());
@@ -30,6 +32,8 @@ public class BlogService {
 	    return blogEntity;
 	}
 
+	 
+	// Convert BlogEntity object to BlogDTO object
 	private BlogDTO convertBlogEntityToDTO(BlogEntity blogEntity) {
 	    BlogDTO blog = new BlogDTO();
 	    blog.setId(blogEntity.getId());
@@ -40,11 +44,14 @@ public class BlogService {
 
 	
 
+	// Creating new Blog
 	public BlogDTO createBlog(BlogDTO blogDTO) {
         BlogEntity savedBlog = blogRepository.save(convertBlogDTOToEntity(blogDTO));
         return convertBlogEntityToDTO(savedBlog);
     }
 	
+	
+	//  Find a Blog by an Id
 	public BlogDTO findBlogById(Long id) {
 		Optional<BlogEntity> blog=blogRepository.findById(id);
 		if(blog.isPresent()) {
@@ -56,6 +63,8 @@ public class BlogService {
 		}
 	}
 
+	
+	// Deleting a Blog data by its Id
 	public boolean deleteBlogById(Long id) {
 		Optional<BlogEntity> blog=blogRepository.findById(id);
 		if(blog.isPresent()) {
@@ -66,6 +75,8 @@ public class BlogService {
 			throw new CustomException("No Blog Found With The Given Id");
 		}
 	}
+	
+	// Updating a Blog by its id
 	  public BlogDTO updateBlog(Long id,BlogDTO blogDTO) {
 		  Optional<BlogEntity> blog=blogRepository.findById(id);
 		  if(blog.isPresent()) {
@@ -78,6 +89,8 @@ public class BlogService {
 			}
 	  }
 	  
+	  
+	  // Retrieving all Blogs from database
 	  public List<BlogDTO> findAllBlog(){
 		  List<BlogEntity> blogs=blogRepository.findAll();
 		  return blogs.stream().map(blog->{
