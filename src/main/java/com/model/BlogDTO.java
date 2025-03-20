@@ -1,5 +1,7 @@
 package com.model;
 
+import java.time.LocalDateTime;
+
 import jakarta.validation.constraints.*;
 
 public class BlogDTO {
@@ -14,6 +16,9 @@ public class BlogDTO {
 	    @Size(min = 3, max = 200, message = "Content must be between 3 and 200 characters")
 	    private String content;
 
+	    private LocalDateTime createdAt;
+	    
+	    
 		public Long getId() {
 			return id;
 		}
@@ -38,11 +43,21 @@ public class BlogDTO {
 			this.content = content;
 		}
 
-		public BlogDTO(Long id,String title,String content) {
+		public LocalDateTime getCreatedAt() {
+	        return createdAt;
+	    }
+
+	    public void setCreatedAt(LocalDateTime createdAt) {
+	        this.createdAt = createdAt;
+	    }
+	    
+	    
+		public BlogDTO(Long id,String title,String content,LocalDateTime createdAt) {
 			super();
 			this.id=id;
 			this.title=title;
 			this.content=content;
+			this.createdAt = createdAt;
 		}
 		public BlogDTO() {}
 	    

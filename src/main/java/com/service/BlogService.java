@@ -29,6 +29,7 @@ public class BlogService {
 	    blogEntity.setId(blog.getId());
 	    blogEntity.setTitle(blog.getTitle());
 	    blogEntity.setContent(blog.getContent());
+	    blogEntity.setCreatedAt(blog.getCreatedAt());  //
 	    return blogEntity;
 	}
 
@@ -39,6 +40,7 @@ public class BlogService {
 	    blog.setId(blogEntity.getId());
 	    blog.setTitle(blogEntity.getTitle());
 	    blog.setContent(blogEntity.getContent());
+	    blog.setCreatedAt(blogEntity.getCreatedAt()); //
 	    return blog;
 	}
 

@@ -1,6 +1,7 @@
 package com.service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
@@ -67,5 +68,17 @@ public class CommentService {
                  .collect(Collectors.toList());
 
 	 }
+	 
+	 // Deleting Comment by its Id
+	 public boolean deleteCommentById(Long id) {
+			Optional<CommentEntity> comment=commentRepository.findById(id);
+			if(comment.isPresent()) {
+				commentRepository.deleteById(id);
+				return true;
+			}
+			else {
+				throw new CustomException("No Comment Found With The Given Id");
+			}
+		} 
 
 }

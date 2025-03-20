@@ -1,5 +1,6 @@
 package com.entity;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import jakarta.persistence.CascadeType;
@@ -21,6 +22,7 @@ public class BlogEntity {
 	private String title;
 	private String content;
 
+	private LocalDateTime createdAt;
 	
 	@OneToMany(mappedBy = "blog", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<CommentEntity> comments;
@@ -54,14 +56,25 @@ public class BlogEntity {
 	public List<CommentEntity> getComments() { return comments; }
     public void setComments(List<CommentEntity> comments) { this.comments = comments; }
 
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+    
     
     // Constructs a BlogEntity with a title and content
 	public BlogEntity(String title, String content) {
 		super();
 		this.title = title;
 		this.content = content;
+		this.createdAt = LocalDateTime.now();
 	}
 	
 	// Default Constructor
-	public BlogEntity() {}
+	public BlogEntity() {
+		this.createdAt = LocalDateTime.now();
+	}
 }

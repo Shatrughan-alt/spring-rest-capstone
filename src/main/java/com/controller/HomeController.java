@@ -19,23 +19,25 @@ import com.model.CommentDTO;
 import com.service.BlogService;
 import com.service.CommentService;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api/blogs")
 @Validated
-public class BlogController {
+public class HomeController {
 	private BlogService blogService;
 	private CommentService commentService;
 	
 	// Constructor-based dependency injection for BlogService and CommentService
-	public BlogController(BlogService blogService, CommentService commentService) {
+	public HomeController(BlogService blogService, CommentService commentService) {
         this.blogService = blogService;
         this.commentService = commentService;
     }
 	
 	// Handle HTTP Request to Create a New Blog
 	 @PostMapping
+	 @Tag(name="Add a Blog")
 	    public ResponseEntity<BlogDTO> createBlog(@Valid @RequestBody BlogDTO blogDTO) {
 		 BlogDTO blog=blogService.createBlog(blogDTO);
 	        return new ResponseEntity<>(blog,HttpStatus.CREATED);
@@ -43,6 +45,7 @@ public class BlogController {
 	 
 	 // Handle HTTP Request to find a Blog by ID
 	@GetMapping("/{id}")
+	@Tag(name="Get a Blog by Id")
 	public ResponseEntity<BlogDTO> findBlogById(@PathVariable Long id){
 		BlogDTO blogData=blogService.findBlogById(id);
 		return new ResponseEntity<>(blogData,HttpStatus.OK);
@@ -51,6 +54,7 @@ public class BlogController {
 	
 	// Handle HTTP Request to Delete a Blog by its ID
 	@DeleteMapping("/{id}")
+	@Tag(name="Delete a Blog by Id")
 	public ResponseEntity<String> deleteBlogById(@PathVariable Long id) {
 	    blogService.deleteBlogById(id);
 	    return ResponseEntity.ok("Blog Deleted Successfully"); 
@@ -60,6 +64,7 @@ public class BlogController {
 	
 	// Handle HTTP Request to Update a Blog by its ID
 	@PutMapping("/{id}")
+	@Tag(name="Update a Blog by Id")
 	public ResponseEntity<BlogDTO> updateBlog(@PathVariable Long id,@Valid @RequestBody BlogDTO blogDTO){
 		BlogDTO blog=blogService.updateBlog(id,blogDTO);
 		return new ResponseEntity<>(blog,HttpStatus.OK);
@@ -69,6 +74,7 @@ public class BlogController {
 	
 	// Handle HTTP Request to Find all Blogs
 	@GetMapping
+	@Tag(name="Get all Blogs")
 	public ResponseEntity<List<BlogDTO>> findAllBlog(){
 		List<BlogDTO> list=blogService.findAllBlog();
 		return new ResponseEntity<>(list,HttpStatus.OK);
@@ -82,17 +88,26 @@ public class BlogController {
 	
 	// Handle HTTP Request to Post Comments 
 	 @PostMapping("/comment")
+	 @Tag(name="Add Comments")
 	 public ResponseEntity<CommentDTO> addComment(@Valid @RequestBody CommentDTO commentDTO) {
 	     return ResponseEntity.status(201).body(commentService.addComment(commentDTO));
 	    }
 	 
 	// Handle HTTP Request to Find All Comments Available for a BlogID
 	 @GetMapping("{id}/comment")
+	 @Tag(name="Get all Comments for a Blog by BlogId")
 	 public ResponseEntity<List<CommentDTO>> getCommentsByBlogId(@PathVariable Long id) {
 	     List<CommentDTO> comments = commentService.getCommentsByBlogId(id);
 	     return ResponseEntity.ok(comments);
 	 }
 	 
+	 
+	 @DeleteMapping("/comment/{id}")
+	 @Tag(name="Delete a Comment by its Id")
+	 public ResponseEntity<String> deleteCommentById(@PathVariable Long id){
+		 commentService.deleteCommentById(id);
+		 return ResponseEntity.ok("Comment Deleted Successfully"); 
+	 }
 	 
 	 
 
