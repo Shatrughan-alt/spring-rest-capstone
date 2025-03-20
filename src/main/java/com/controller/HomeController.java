@@ -22,6 +22,10 @@ import com.service.CommentService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 
+
+/**
+ * Controller class to handle API requests for Blog and Comments
+ */
 @RestController
 @RequestMapping("/api/blogs")
 @Validated
@@ -101,7 +105,7 @@ public class HomeController {
 	     return ResponseEntity.ok(comments);
 	 }
 	 
-	 
+	 // Handle HTTP Request to Delete a Comment by its ID
 	 @DeleteMapping("/comment/{id}")
 	 @Tag(name="Delete a Comment by its Id")
 	 public ResponseEntity<String> deleteCommentById(@PathVariable Long id){
@@ -109,7 +113,19 @@ public class HomeController {
 		 return ResponseEntity.ok("Comment Deleted Successfully"); 
 	 }
 	 
-	 
+	 // Handle HTTP Requests to Update a Comment by its ID
+	 @PutMapping("/comment/{id}")
+	 @Tag(name="Update a Comment by its Id")
+	 public ResponseEntity<CommentDTO> updateComment(@PathVariable Long id,@Valid @RequestBody CommentDTO commentDTO){
+		 CommentDTO comment = commentService.updateComment(id,commentDTO);
+		 return new ResponseEntity<>(comment,HttpStatus.OK);
+	 }
 
-
+	// Handle HTTP Request to Find all Comments
+	 @Tag(name="Get all Comments")
+	 @GetMapping("/allComments")
+	 public ResponseEntity<List<CommentDTO>> findAllComments(){
+			List<CommentDTO> list=commentService.findAllComments();
+			return new ResponseEntity<>(list,HttpStatus.OK);
+		}
 }

@@ -5,6 +5,10 @@ import org.springframework.stereotype.Repository;
 
 import com.entity.BlogEntity;
 
+/**
+ * Repository interface for BlogEntity.
+ * Extends JpaRepository to provide CRUD operations.
+ */
 @Repository
 public interface BlogRepository extends JpaRepository<BlogEntity, Long>{
 

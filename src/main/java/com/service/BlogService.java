@@ -11,19 +11,27 @@ import com.exception.CustomException;
 import com.model.BlogDTO;
 import com.repository.BlogRepository;
 
+/**
+ * Service class for handling blog-related operations.
+ */
 @Service
 public class BlogService {
 	
 	private BlogRepository blogRepository;
 	
-    // Constructor based Dependency Injection for BlogRepository
+	/**
+     * Constructor-based Dependency Injection for BlogRepository.
+     * 
+     * */
 	public BlogService(BlogRepository blogRepository) {
 		this.blogRepository=blogRepository;
 	}
 	
 	
 	
-	// Convert BlogDTO object to BlogEntity object
+	/**
+	 * Converts a BlogDTO object to a BlogEntity object.
+	 * */
 	private BlogEntity convertBlogDTOToEntity(BlogDTO blog) {
 	    BlogEntity blogEntity = new BlogEntity();
 	    blogEntity.setId(blog.getId());
@@ -34,7 +42,9 @@ public class BlogService {
 	}
 
 	 
-	// Convert BlogEntity object to BlogDTO object
+	/**
+	 * Converts a BlogEntity object to a BlogDTO object.
+	 * */
 	private BlogDTO convertBlogEntityToDTO(BlogEntity blogEntity) {
 	    BlogDTO blog = new BlogDTO();
 	    blog.setId(blogEntity.getId());
@@ -46,14 +56,25 @@ public class BlogService {
 
 	
 
-	// Creating new Blog
+	/**
+	 * Creates a new blog entry.
+	 * 
+	 * @param blogDTO the DTO containing blog details
+	 * @return the created BlogDTO object
+	 */
 	public BlogDTO createBlog(BlogDTO blogDTO) {
         BlogEntity savedBlog = blogRepository.save(convertBlogDTOToEntity(blogDTO));
         return convertBlogEntityToDTO(savedBlog);
     }
 	
 	
-	//  Find a Blog by an Id
+	/**
+	 * Finds a blog by its ID.
+	 * 
+	 * @param id the ID of the blog
+	 * @return the found BlogDTO object
+	 * @throws CustomException if the blog is not found
+	 */
 	public BlogDTO findBlogById(Long id) {
 		Optional<BlogEntity> blog=blogRepository.findById(id);
 		if(blog.isPresent()) {
@@ -66,7 +87,13 @@ public class BlogService {
 	}
 
 	
-	// Deleting a Blog data by its Id
+	/**
+	 * Deletes a blog by its ID.
+	 * 
+	 * @param id the ID of the blog to be deleted
+	 * @return true if deletion was successful
+	 * @throws CustomException if the blog is not found
+	 */
 	public boolean deleteBlogById(Long id) {
 		Optional<BlogEntity> blog=blogRepository.findById(id);
 		if(blog.isPresent()) {
@@ -78,7 +105,14 @@ public class BlogService {
 		}
 	}
 	
-	// Updating a Blog by its id
+	/**
+	 * Updates a blog by its ID.
+	 * 
+	 * @param id the ID of the blog to update
+	 * @param blogDTO the updated blog data
+	 * @return the updated BlogDTO object
+	 * @throws CustomException if the blog is not found
+	 */
 	  public BlogDTO updateBlog(Long id,BlogDTO blogDTO) {
 		  Optional<BlogEntity> blog=blogRepository.findById(id);
 		  if(blog.isPresent()) {
@@ -92,7 +126,11 @@ public class BlogService {
 	  }
 	  
 	  
-	  // Retrieving all Blogs from database
+	  /**
+		 * Retrieves all blogs from the database.
+		 * 
+		 * @return a list of BlogDTO objects
+		 */
 	  public List<BlogDTO> findAllBlog(){
 		  List<BlogEntity> blogs=blogRepository.findAll();
 		  return blogs.stream().map(blog->{
